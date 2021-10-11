@@ -7,23 +7,18 @@ class ContactForm extends Component {
   state = {
     name: "",
     number: "",
-    agree: false,
   };
 
   nameId = uuidv4();
   numberId = uuidv4();
-  agreeId = uuidv4();
 
   handleSubmit = (evt) => {
-    const { name, number } = this.state;
     evt.preventDefault();
-    const contact = {
-      id: uuidv4(),
-      name,
-      number,
-    };
+    const { name, number } = this.state;
+    const { resetForm } = this;
+    const contact = { id: uuidv4(), name, number };
     this.props.formSubmit(contact);
-    this.resetForm();
+    resetForm();
   };
 
   inputChange = (evt) => {
@@ -33,24 +28,13 @@ class ContactForm extends Component {
     });
   };
 
-  agreeChange = (evt) => {
-    this.setState({ agree: evt.target.checked });
-  };
-
   resetForm = () => {
-    this.setState({ name: "", number: "", agree: false });
+    this.setState({ name: "", number: "" });
   };
 
   render() {
-    const {
-      handleSubmit,
-      inputChange,
-      agreeChange,
-      nameId,
-      numberId,
-      agreeId,
-    } = this;
-    const { name, number, agree } = this.state;
+    const { handleSubmit, inputChange, nameId, numberId } = this;
+    const { name, number } = this.state;
     return (
       <div className={s.formWrapper}>
         <form className={s.form} onSubmit={handleSubmit}>
@@ -62,10 +46,8 @@ class ContactForm extends Component {
               value={name}
               type="text"
               name="name"
-              placeholder="Enter name"
+              placeholder="Name"
               pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-              title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
-              required
               onChange={inputChange}
             />
           </label>
@@ -78,29 +60,12 @@ class ContactForm extends Component {
               type="tel"
               value={number}
               name="number"
-              placeholder="Enter number"
+              placeholder="Number"
               pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-              title="Номер телефона должен состоять цифр и может содержать пробелы, тире, круглые скобки и может начинаться с +"
-              required
               onChange={inputChange}
             />
           </label>
-          <label className={s.label} htmlFor={agreeId}>
-            <input
-              id={agreeId}
-              className={s.checkbox}
-              value={agree}
-              type="checkbox"
-              name="agree"
-              checked={agree}
-              onChange={agreeChange}
-            />
-            Agree
-          </label>
-
-          <button className={s.button} disabled={!agree}>
-            Add contact
-          </button>
+          <button className={s.button}>Add contact</button>
         </form>
       </div>
     );
@@ -110,14 +75,13 @@ class ContactForm extends Component {
 ContactForm.propTypes = {
   name: PropTypes.string,
   number: PropTypes.number,
-  agree: PropTypes.bool,
+
   nameId: PropTypes.number,
   numberId: PropTypes.number,
-  agreeId: PropTypes.number,
+
   handleSubmit: PropTypes.func,
   formSubmit: PropTypes.func,
   inputChange: PropTypes.func,
-  agreeChange: PropTypes.func,
 };
 
 export default ContactForm;

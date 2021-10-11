@@ -55,7 +55,7 @@ class App extends Component {
     const { filter } = this.state;
     const getContacts = this.handleContacts();
     return (
-      <div className="s.App">
+      <div className={s.App}>
         <h1 className={s.title}>Phonebook</h1>
         <ContactForm formSubmit={formSubmit} />
         <h2 className={s.title}>Contacts</h2>
