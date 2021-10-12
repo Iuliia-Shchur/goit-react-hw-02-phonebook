@@ -1,9 +1,9 @@
 import { Component } from "react";
 
 import s from "./App.module.css";
-import ContactForm from "./Components/ContactForm/ContactForm";
-import ContactList from "./Components/ContactList/ContactList";
-import Filter from "./Components/Filter/Filter";
+import ContactForm from "../Components/ContactForm/ContactForm";
+import ContactList from "../Components/ContactList/ContactList";
+import Filter from "../Components/Filter/Filter";
 
 class App extends Component {
   state = {
